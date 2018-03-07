@@ -1,4 +1,9 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var l7 = ee.ImageCollection("LANDSAT/LE7_L1T");
+var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-Map.setCenter()
+Map.setCenter(100.54275512695312,13.740719078324688,11);
+
+var L7Filtered2014 = l7Raw.filterDate('2014-01-01','2014-12-31');
+var L7Filtered2000 = l7Raw.filterDate('2000-01-01','2000-12-31');
+
+
