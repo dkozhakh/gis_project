@@ -4,11 +4,11 @@ var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T");
 //centering at Bangkok
 Map.setCenter(100.54275512695312,13.740719078324688,11);
 
-//Filtering to 2000, 2005, 2010, 2015
-var L7Filtered2015 = l7Raw.filterDate('2015-01-01','2015-12-31');
-var L7Filtered2010 = l7Raw.filterDate('2010-01-01','2010-12-31');
-var L7Filtered2005 = l7Raw.filterDate('2005-01-01','2005-12-31');
-var L7Filtered2000 = l7Raw.filterDate('2000-01-01','2000-12-31');
+//Filtering to 2000, 2005, 2010, 2015 summer
+var L7Filtered2015 = l7Raw.filterDate('2015-06-01','2015-08-31');
+var L7Filtered2010 = l7Raw.filterDate('2010-06-01','2010-08-31');
+var L7Filtered2005 = l7Raw.filterDate('2005-06-01','2005-08-31');
+var L7Filtered2000 = l7Raw.filterDate('2000-06-01','2000-08-31');
 
 //Creating Simple Composite for cleaner image
 
