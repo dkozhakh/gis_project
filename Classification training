@@ -1,7 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
-//centering at Bangkok
+//centering at Bangkok, Thailand
 Map.setCenter(100.54275512695312,13.740719078324688,11);
 
 //Filtering to 2000, 2005, 2010, 2015 summer
@@ -32,4 +32,5 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
   asFloat: true
 });
 
+//Now calculate NDVI, NDWI, NDBI to see what's happeing, train classificator
 
