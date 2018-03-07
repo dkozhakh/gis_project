@@ -1,9 +1,35 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
+//centering at Bangkok
 Map.setCenter(100.54275512695312,13.740719078324688,11);
 
-var L7Filtered2014 = l7Raw.filterDate('2014-01-01','2014-12-31');
+//Filtering to 2000, 2005, 2010, 2015
+var L7Filtered2015 = l7Raw.filterDate('2015-01-01','2015-12-31');
+var L7Filtered2010 = l7Raw.filterDate('2010-01-01','2010-12-31');
+var L7Filtered2005 = l7Raw.filterDate('2005-01-01','2005-12-31');
 var L7Filtered2000 = l7Raw.filterDate('2000-01-01','2000-12-31');
+
+//Creating Simple Composite for cleaner image
+
+var l7Composite15= ee.Algorithms.Landsat.simpleComposite({
+  collection: L7Filtered2015,
+  asFloat: true
+});
+
+var l7Composite10= ee.Algorithms.Landsat.simpleComposite({
+  collection: L7Filtered2010,
+  asFloat: true
+});
+
+var l7Composite05= ee.Algorithms.Landsat.simpleComposite({
+  collection: L7Filtered2005,
+  asFloat: true
+});
+
+var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
+  collection: L7Filtered2000,
+  asFloat: true
+});
 
 
