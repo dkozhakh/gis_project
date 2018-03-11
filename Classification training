@@ -217,7 +217,8 @@ var L7Filtered2010 = l7Raw.filterDate('2010-06-01','2010-08-31').filterBounds(bu
 var L7Filtered2005 = l7Raw.filterDate('2005-06-01','2005-08-31').filterBounds(buffer_Bangkok);
 var L7Filtered2000 = l7Raw.filterDate('2000-06-01','2000-08-31').filterBounds(buffer_Bangkok);
 
-
+Map.addLayer(L7Filtered2000,{},'Bangkok 2000');
+Map.addLayer(L7Filtered2000,{},'Bangkok 2000');
 //Creating Simple Composite for cleaner image
 
 var l7Composite15= ee.Algorithms.Landsat.simpleComposite({
