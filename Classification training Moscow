@@ -320,10 +320,10 @@ Export.image.toAsset({
   
 //Exporting to Google Drive
 Export.image.toDrive(
-  {image: classified2015,
+  {image: max2015,
     description: 'BU Moscow,2015',
     fileNamePrefix: 'bu_moscow_2015',
-    region: buffer_Bangkok,
+    region: buffer_Moscow,
     scale: 30, 
     maxPixels: 1e9
   });
