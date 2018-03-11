@@ -306,3 +306,6 @@ Map.addLayer(classified2015.mask(classified2015), {'min':0, 'max':1 , 'palette':
 Map.addLayer(classified2010.mask(classified2010), {'min':0, 'max':1 , 'palette':'b119ff'},'BU 2010');
 Map.addLayer(classified2005.mask(classified2005), {'min':0, 'max':1 , 'palette':'blue'},'BU 2005');
 Map.addLayer(classified2000.mask(classified2000), {'min':0, 'max':1 , 'palette':'1dfff4'},'BU 2000');
+
+Map.addLayer(ndbi15,{'min':-0.5197, 'max':0.664},'NDBI 2015');
+Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
