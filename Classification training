@@ -1,5 +1,11 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T");
+var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
+    geometry = /* color: #d63000 */ee.Geometry.Polygon(
+        [[[100.44593811035156, 13.834746332602338],
+          [100.44044494628906, 13.67334300504262],
+          [100.43838500976562, 13.63998137283629],
+          [100.6732177734375, 13.637312238450713],
+          [100.68214416503906, 13.840746785080066]]]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
 Map.setCenter(100.54275512695312,13.740719078324688,11);
