@@ -30,10 +30,12 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 
 //NDVI
 var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']);
+print(ndvi15);//doesnt print
 var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
 var max_ndvi15 = ndvi15.max();
 var max_ndvi00 = ndvi00.max();
 Map.addLayer(max_ndvi15);//doesnt add the layer
+
 //NDBI
 var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']);
 var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']);
