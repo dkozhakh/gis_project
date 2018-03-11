@@ -344,16 +344,16 @@ print('Training overall accuracy: ', overallAccuracy);
 
 
 //How big is urban area??? And it's not working...
-var urban_Bangkok2015masked = classified2015.mask(classified2015);
-var urban_Bangkok2015 = urban_Bangkok2015masked.clip(buffer_Bangkok);
+var urban_Moscow2015masked = classified2015.mask(classified2015);
+var urban_Moscow2015 = urban_Moscow2015masked.clip(buffer_Moscow);
 
-var urbanLandUseArea= urban_Bangkok2015.multiply(ee.Image.pixelArea());
+var urbanLandUseArea= urban_Moscow2015.multiply(ee.Image.pixelArea());
 
 var stats = urbanLandUseArea.reduceRegion(
 {
 'reducer': ee.Reducer.count(),
 'scale': 30,
-'geometry': buffer_Bangkok,
+'geometry': buffer_Moscow,
 'maxPixels': 1e9
 });
 print(stats);
