@@ -266,5 +266,9 @@ var landcover = BU.merge(NBU);
 //SETTING BANDS
 var bands = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6_VCID_2', 'B7', 'NDVI','NDBI','NDWI'];
 
-
+//Adding bands to composites
+var input15 = l7Composite15.addBands(ndvi15).addBands(ndbi15).addBands(ndwi15);
+var input10 = l7Composite10.addBands(ndvi10).addBands(ndbi10).addBands(ndwi10);
+var input05 = l7Composite05.addBands(ndvi05).addBands(ndbi05).addBands(ndwi05);
+var input00 = l7Composite00.addBands(ndvi00).addBands(ndbi00).addBands(ndwi00);
 
