@@ -317,3 +317,5 @@ print('Resubstitution error matrix: ', accuracyMatrix);
 //Estimate the overall accuracy rate
 var overallAccuracy = accuracyMatrix.accuracy();
 print('Training overall accuracy: ', overallAccuracy);
+
+//Why is my classifier 100% correct???!!!!
