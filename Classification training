@@ -206,7 +206,7 @@ var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
 var roi_Bangkok = ee.Geometry.Point(100.515556, 13.726944);
-var buffer_Bangkok = roi_Bangkok.buffer(15000)
+var buffer_Bangkok = roi_Bangkok.buffer(15000);
 Map.addLayer(buffer_Bangkok,{}, "Bangkok");
 
 Map.setCenter(100.515556, 13.726944, 10);
@@ -321,17 +321,21 @@ print('Training overall accuracy: ', overallAccuracy);
 
 //Why is my classifier 100% correct???!!!!
 
-//How big is urban area???
 
-var urban_Bangkok2015 = classified2015.clip(buffer_Bangkok);
+//How big is urban area??? And it's not working...
+var urban_Bangkok2015masked = classified2015.mask(classified2015);
+var urban_Bangkok2015 = urban_Bangkok2015masked.clip(buffer_Bangkok);
+
 var urbanLandUseArea= urban_Bangkok2015.multiply(ee.Image.pixelArea());
 
 var stats = urbanLandUseArea.reduceRegion(
 {
-'reducer': ee.Reducer.max(),
+'reducer': ee.Reducer.count(),
 'scale': 30,
 'geometry': buffer_Bangkok,
 'maxPixels': 1e9
 });
 print(stats);
+
+print('urban area: ' + stats.getInfo() + ' square meters');
 
