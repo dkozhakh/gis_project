@@ -2,8 +2,8 @@
 var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
-var roi_Shanghai = ee.Geometry.Point(31.2411740353, 121.474674768);
+var roi_Shanghai = ee.Geometry.Point(121.474674768, 31.2411740353);
 var buffer_Shanghai = roi_Shanghai.buffer(15000);
 Map.addLayer(buffer_Shanghai,{}, "Shanghai");
 
-Map.setCenter(31.2411740353, 121.474674768, 10);
+Map.setCenter(121.474674768,31.2411740353, 10);
