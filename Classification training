@@ -302,7 +302,7 @@ var classified2015 = input15.select(bands).classify(trained);
 
 //Mapping results
 
-Map.addLayer(classified2015.mask(classified2015), {'min':0, 'max':1 , 'palette':'ffc82d'},'BU 2015');
-Map.addLayer(classified2010.mask(classified2010), {'min':0, 'max':1 , 'palette':'ff8f40'},'BU 2010');
-Map.addLayer(classified2005.mask(classified2015), {'min':0, 'max':1 , 'palette':'07ff1a'},'BU 2005');
-Map.addLayer(classified2000.mask(classified2000), {'min':0, 'max':1 , 'palette':'blue'},'BU 2000');
+Map.addLayer(classified2015.mask(classified2015), {'min':0, 'max':1 , 'palette':'ff133f'},'BU 2015');
+Map.addLayer(classified2010.mask(classified2010), {'min':0, 'max':1 , 'palette':'b119ff'},'BU 2010');
+Map.addLayer(classified2005.mask(classified2005), {'min':0, 'max':1 , 'palette':'blue'},'BU 2005');
+Map.addLayer(classified2000.mask(classified2000), {'min':0, 'max':1 , 'palette':'1dfff4'},'BU 2000');
