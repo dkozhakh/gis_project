@@ -321,14 +321,16 @@ print('Training overall accuracy: ', overallAccuracy);
 
 //Why is my classifier 100% correct???!!!!
 
+//How big is urban area???
+
 var urban_Bangkok2015 = classified2015.clip(buffer_Bangkok);
 var urbanLandUseArea= urban_Bangkok2015.multiply(ee.Image.pixelArea());
 
-varstats = urbanLandUseArea.reduceRegion(
+var stats = urbanLandUseArea.reduceRegion(
 {
-'reducer': ee.Reducer.sum(),
+'reducer': ee.Reducer.mean(),
 'geometry': buffer_Bangkok,
-'maxPixels': e9
+'maxPixels': 1e9
 });
 print(stats);
 
