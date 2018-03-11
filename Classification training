@@ -309,3 +309,11 @@ Map.addLayer(classified2000.mask(classified2000), {'min':0, 'max':1 , 'palette':
 
 Map.addLayer(ndbi15,{'min':-0.5197, 'max':0.664},'NDBI 2015');
 Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
+
+//Calculate a confusion matrix
+var accuracyMatrix = trained.confusionMatrix();
+print('Resubstitution error matrix: ', accuracyMatrix);
+
+//Estimate the overall accuracy rate
+var overallAccuracy = accuracyMatrix.accuracy();
+print('Training overall accuracy: ', overallAccuracy);
