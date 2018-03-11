@@ -321,3 +321,14 @@ print('Training overall accuracy: ', overallAccuracy);
 
 //Why is my classifier 100% correct???!!!!
 
+var urban_Bangkok2015 = classified2015.clip(buffer_Bangkok);
+var urbanLandUseArea= urban_Bangkok2015.multiply(ee.Image.pixelArea());
+
+varstats = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'geometry': buffer_Bangkok,
+'maxPixels': e9
+});
+print(stats);
+
