@@ -10,8 +10,8 @@ Map.addLayer(buffer_Bangkok,{}, "Bangkok");
 Map.setCenter(100.515556, 13.726944, 10);
 
 //Filtering to 2000, 2015 summer
-var L7Filtered2015 = l7Raw.filterDate('2015-06-01','2015-08-31').max();
-var L7Filtered2000 = l7Raw.filterDate('2000-06-01','2000-08-31').max();
+var L7Filtered2015 = l7Raw.filterDate('2015-06-01','2015-08-31').clip(buffer_Bangkok);
+var L7Filtered2000 = l7Raw.filterDate('2000-06-01','2000-08-31').clip(buffer_Bangkok);
 
 //Creating Simple Composite for cleaner image
 
@@ -28,8 +28,8 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 //Now calculate NDVI, NDWI, NDBI to see what's happeing, train classificator
 
 //NDVI
-var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']).clip(buffer_Bangkok);
-var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']).clip(buffer_Bangkok);
+var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']).max();
+var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
 
 //NDBI
 var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']).clip(buffer_Bangkok);
