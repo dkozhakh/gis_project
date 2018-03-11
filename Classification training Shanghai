@@ -204,6 +204,26 @@ var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
             {
               "landcover": 0,
               "system:index": "9"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[121.53170585632324, 31.2522859424759],
+                  [121.53273582458496, 31.250745036045743],
+                  [121.53582572937012, 31.252506069912993],
+                  [121.5336799621582, 31.253459949542773]]]),
+            {
+              "landcover": 0,
+              "system:index": "10"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[121.55488014221191, 31.26820716952122],
+                  [121.55221939086914, 31.266152968564715],
+                  [121.55342102050781, 31.264245456204982],
+                  [121.55668258666992, 31.267033345879277]]]),
+            {
+              "landcover": 0,
+              "system:index": "11"
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
@@ -283,7 +303,7 @@ scale: 30
 });
 
 //Choosing classifier
-var classifier = ee.Classifier.randomForest({numberOfTrees: 20})
+var classifier = ee.Classifier.randomForest({numberOfTrees: 22})
 .train({
 features: training,
 classProperty: 'landcover',
