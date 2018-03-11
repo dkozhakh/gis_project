@@ -209,7 +209,7 @@ var roi_Bangkok = ee.Geometry.Point(100.515556, 13.726944);
 var buffer_Bangkok = roi_Bangkok.buffer(15000)
 Map.addLayer(buffer_Bangkok,{}, "Bangkok");
 
-Map.setCenter(100.515556, 13.726944);
+Map.setCenter(100.515556, 13.726944, 10);
 
 //Filtering to 2000, 2005, 2010, 2015 summer
 var L7Filtered2015 = l7Raw.filterDate('2015-06-01','2015-08-31').filterBounds(buffer_Bangkok);
@@ -218,7 +218,7 @@ var L7Filtered2005 = l7Raw.filterDate('2005-06-01','2005-08-31').filterBounds(bu
 var L7Filtered2000 = l7Raw.filterDate('2000-06-01','2000-08-31').filterBounds(buffer_Bangkok);
 
 Map.addLayer(L7Filtered2000,{},'Bangkok 2000');
-Map.addLayer(L7Filtered2000,{},'Bangkok 2000');
+Map.addLayer(L7Filtered2005,{},'Bangkok 2005');
 //Creating Simple Composite for cleaner image
 
 var l7Composite15= ee.Algorithms.Landsat.simpleComposite({
@@ -320,3 +320,4 @@ var overallAccuracy = accuracyMatrix.accuracy();
 print('Training overall accuracy: ', overallAccuracy);
 
 //Why is my classifier 100% correct???!!!!
+
