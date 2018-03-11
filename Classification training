@@ -328,7 +328,8 @@ var urbanLandUseArea= urban_Bangkok2015.multiply(ee.Image.pixelArea());
 
 var stats = urbanLandUseArea.reduceRegion(
 {
-'reducer': ee.Reducer.mean(),
+'reducer': ee.Reducer.max(),
+'scale': 30,
 'geometry': buffer_Bangkok,
 'maxPixels': 1e9
 });
