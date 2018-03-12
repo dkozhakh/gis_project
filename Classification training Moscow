@@ -613,6 +613,26 @@ var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
             {
               "landcover": 0,
               "system:index": "24"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[37.549638748168945, 55.70972286891198],
+                  [37.54843711853027, 55.70828425750125],
+                  [37.55225658416748, 55.707111568677625],
+                  [37.55399465560913, 55.7087920087535]]]),
+            {
+              "landcover": 0,
+              "system:index": "25"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[37.543909549713135, 55.705963024890394],
+                  [37.54221439361572, 55.70535851460028],
+                  [37.54369497299194, 55.70391974249468],
+                  [37.5457763671875, 55.70526179208601]]]),
+            {
+              "landcover": 0,
+              "system:index": "26"
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
