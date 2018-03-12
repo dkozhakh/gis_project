@@ -1487,7 +1487,7 @@ var input00 = l7Composite00.addBands(ndvi00).addBands(ndbi00).addBands(ndwi00);
 //Creating the training dataset
 
 var training = input15.select(bands).sampleRegions({
-collection: landcover,
+collection: landcover_training,
 properties: ['landcover'],
 scale: 30
 });
@@ -1507,7 +1507,7 @@ var trained = classifier.train(training, 'landcover', bands);
 
 //Classifying 2015,2010,2005,2000 with 2015 trained classifier
 
-var classified2000 = input00.select(bands).classify(trained);
+var classified2000 = input00.select(bands).classify(landcover_validation);
 var classified2005 = input05.select(bands).classify(trained);
 var classified2010 = input10.select(bands).classify(trained);
 var classified2015 = input15.select(bands).classify(trained);
