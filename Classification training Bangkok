@@ -1473,7 +1473,7 @@ var ndwi05 = l7Composite05.normalizedDifference(['B2', 'B4']).rename('NDWI');
 var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']).rename('NDWI');
 
 var landcover_training = BU_training.merge(NBU_training);
-var landcover_validation = BU_validation.merge(NBU_validation)
+var landcover_validation = BU_validation.merge(NBU_validation);
 
 //SETTING BANDS
 var bands = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6_VCID_2', 'B7', 'NDVI','NDBI','NDWI'];
