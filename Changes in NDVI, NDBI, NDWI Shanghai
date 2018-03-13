@@ -95,9 +95,9 @@ Map.addLayer(increase_ndbi.mask(increase_ndbi), {'palette': 'FF7F50'}, 'increase
 //Export images
 Export.image.toDrive(
   {image: increase_ndbi,
-    description: 'increase_in_NDBI_Moscow2000_2015',
-    fileNamePrefix: 'increase_in_NDBI_Moscow2000_2015',
-    region: buffer_Moscow,
+    description: 'increase_in_NDBI_Shanghai2000_2015',
+    fileNamePrefix: 'increase_in_NDBI_Shanghai2000_2015',
+    region: buffer_Shanghai,
     scale: 30, 
     maxPixels: 1e9
   });
@@ -110,8 +110,8 @@ Map.addLayer(decrease_ndbi.mask(decrease_ndbi), {'palette': '6495ED'}, 'decrease
 
 Export.image.toDrive(
   {image: decrease_ndbi,
-    description: 'decrease_in_NDBI_Moscow2000_2015',
-    fileNamePrefix: 'decrease_in_NDBI_Moscow2000_2015',
+    description: 'decrease_in_NDBI_Shanghai2000_2015',
+    fileNamePrefix: 'decrease_in_NDBI_Shanghai2000_2015',
     region: buffer_Moscow,
     scale: 30, 
     maxPixels: 1e9
@@ -135,9 +135,9 @@ Map.addLayer(decrease_ndwi.mask(decrease_ndwi), {'palette': 'FF0000'}, 'decrease
 
 Export.image.toDrive(
   {image: decrease_ndwi,
-    description: 'decrease_in_NDWI_Moscow_2015',
-    fileNamePrefix: 'decrease_in_NDWI_Moscow_2015',
-    region: buffer_Moscow,
+    description: 'decrease_in_NDWI_Shanghai_2015',
+    fileNamePrefix: 'decrease_in_NDWI_Shanghai_2015',
+    region: buffer_Shanghai,
     scale: 30, 
     maxPixels: 1e9
   });
@@ -151,9 +151,9 @@ Map.addLayer(increase_ndwi.mask(increase_ndwi), {'palette': '00FF00'}, 'increase
 //Export images
 Export.image.toDrive(
   {image: increase_ndwi,
-    description: 'increase_in_NDWI_Moscow2000_2015',
-    fileNamePrefix: 'increase_in_NDWI_Moscow2000_2015',
-    region: buffer_Moscow,
+    description: 'increase_in_NDWI_Shanghai2000_2015',
+    fileNamePrefix: 'increase_in_NDWI_Shanghai2000_2015',
+    region: buffer_Shanghai,
     scale: 30, 
     maxPixels: 1e9
   });
