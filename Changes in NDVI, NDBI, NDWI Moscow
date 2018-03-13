@@ -1,3 +1,6 @@
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
 var roi_Moscow = ee.Geometry.Point(37.6378811, 55.764303);
 var buffer_Moscow = roi_Moscow.buffer(15000);
 Map.addLayer(buffer_Moscow,{}, "Moscow");
