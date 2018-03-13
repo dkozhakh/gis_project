@@ -1473,8 +1473,6 @@ inputProperties: bands
 });
 
 
-//?????Do I put 'class' or 'landcover' in there???? Well, apparently landcover it is
-
 //Classifying 2015,2010,2005,2000 with 2015 trained classifier
 
 var classified2000 = input00.select(bands).classify(trained);
@@ -1552,6 +1550,7 @@ Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
 
 
 //How big is urban area??? And it's not working...
+//2015
 var urban_Shanghai2015masked = classified2015.mask(classified2015);
 var urban_Shanghai2015 = urban_Shanghai2015masked.clip(buffer_Shanghai);
 
@@ -1567,3 +1566,37 @@ var stats15 = urbanLandUseArea.reduceRegion(
 print(stats15);
 
 print('urban area: ' + stats15.getInfo() + ' square meters');
+
+//2010
+var urban_Shanghai2010masked = classified2010.mask(classified2010);
+var urban_Shanghai2010 = urban_Shanghai2010masked.clip(buffer_Shanghai);
+
+var urbanLandUseArea= urban_Shanghai2010.multiply(ee.Image.pixelArea());
+
+var stats10 = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'scale': 30,
+'geometry': buffer_Shanghai,
+'maxPixels': 1e9
+});
+print(stats15);
+
+print('urban area: ' + stats10.getInfo() + ' square meters');
+
+//2005
+var urban_Shanghai2005masked = classified2005.mask(classified2005);
+var urban_Shanghai2005 = urban_Shanghai2005masked.clip(buffer_Shanghai);
+
+var urbanLandUseArea= urban_Shanghai2005.multiply(ee.Image.pixelArea());
+
+var stats05 = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'scale': 30,
+'geometry': buffer_Shanghai,
+'maxPixels': 1e9
+});
+print(stats05);
+
+print('urban area: ' + stats05.getInfo() + ' square meters');
