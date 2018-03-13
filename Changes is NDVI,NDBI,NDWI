@@ -8,7 +8,7 @@ var buffer_Bangkok = roi_Bangkok.buffer(15000);
 Map.addLayer(buffer_Bangkok,{}, "Bangkok");
 
 Map.setCenter(100.515556, 13.726944, 10);
-//How do I clip to Bangkok borders?
+
 
 //Filtering to 2000, 2015 summer
 var L7Filtered2015 = l7Raw.filterDate('2015-06-01','2015-08-31');
@@ -26,15 +26,14 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
   asFloat: true
 });
 
-//Now calculate NDVI, NDWI, NDBI to see what's happeing, train classificator
 
 //NDVI
 var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']);
 print(ndvi15);//doesnt print
 var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
-var max_ndvi15 = ndvi15.max();
-var max_ndvi00 = ndvi00.max();
-Map.addLayer(max_ndvi15);//doesnt add the layer
+// var max_ndvi15 = ndvi15.max();
+// var max_ndvi00 = ndvi00.max();
+Map.addLayer(ndvi15);//doesnt add the layer
 
 //NDBI
 var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']);
