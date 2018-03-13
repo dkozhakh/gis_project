@@ -1581,30 +1581,39 @@ print('urban area: ' + stats2010.getInfo() + ' square meters');
 
 //Year 2005
 
-var urban_Bangkok2010masked = classified2010.mask(classified2010);
-var urban_Bangkok2010 = urban_Bangkok2010masked.clip(buffer_Bangkok);
+var urban_Bangkok2005masked = classified2005.mask(classified2005);
+var urban_Bangkok2005 = urban_Bangkok2005masked.clip(buffer_Bangkok);
 
-var urbanLandUseArea= urban_Bangkok2010.multiply(ee.Image.pixelArea());
+var urbanLandUseArea= urban_Bangkok2005.multiply(ee.Image.pixelArea());
 
-var stats2010 = urbanLandUseArea.reduceRegion(
+var stats2005 = urbanLandUseArea.reduceRegion(
 {
 'reducer': ee.Reducer.sum(),
 'scale': 30,
 'geometry': buffer_Bangkok,
 'maxPixels': 1e9
 });
-print(stats2010);
+print(stats2005);
 
-print('urban area: ' + stats2010.getInfo() + ' square meters');
+print('urban area: ' + stats2005.getInfo() + ' square meters');
+//Year 2000
 
+var urban_Bangkok2000masked = classified2000.mask(classified2000);
+var urban_Bangkok2000 = urban_Bangkok2000masked.clip(buffer_Bangkok);
 
+var urbanLandUseArea= urban_Bangkok2000.multiply(ee.Image.pixelArea());
 
-// //Exporting to Assets
-// Export.image.toAsset({ 
-//   image: classified2015,
-//   region: buffer_Bangkok,
-//   description: 'built-up areas, Bangkok, 2015', assetId: 'BuiltUpAreasBangkok2015',
-//   scale: 30});
+var stats2000 = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'scale': 30,
+'geometry': buffer_Bangkok,
+'maxPixels': 1e9
+});
+print(stats2000);
+
+print('urban area: ' + stats2000.getInfo() + ' square meters');
+
   
 //Exporting to Google Drive
 Export.image.toDrive(
