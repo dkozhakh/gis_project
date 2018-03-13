@@ -1482,6 +1482,10 @@ var classified2005 = input05.select(bands).classify(trained);
 var classified2010 = input10.select(bands).classify(trained);
 var classified2015 = input15.select(bands).classify(trained);
 
+//Map.addLayer(classified2000)
+var accuracyShanghai = validation.classify(trained);
+Export.table.toDrive(accuracyShanghai);
+
 //Mapping results
 
 Map.addLayer(classified2015.mask(classified2015), {'min':0, 'max':1 , 'palette':'ff133f'},'BU 2015');
@@ -1489,12 +1493,12 @@ Map.addLayer(classified2010.mask(classified2010), {'min':0, 'max':1 , 'palette':
 Map.addLayer(classified2005.mask(classified2005), {'min':0, 'max':1 , 'palette':'blue'},'BU 2005');
 Map.addLayer(classified2000.mask(classified2000), {'min':0, 'max':1 , 'palette':'1dfff4'},'BU 2000');
 
-//Exporting to Assets
-Export.image.toAsset({ 
-  image: classified2015,
-  region: buffer_Shanghai,
-  description: 'built-up areas, Shanghai, 2015', assetId: 'BuiltUpAreasShanghai2015',
-  scale: 30});
+// //Exporting to Assets
+// Export.image.toAsset({ 
+//   image: classified2015,
+//   region: buffer_Shanghai,
+//   description: 'built-up areas, Shanghai, 2015', assetId: 'BuiltUpAreasShanghai2015',
+//   scale: 30});
   
 //Exporting to Google Drive
 Export.image.toDrive(
@@ -1511,15 +1515,13 @@ Export.image.toDrive(
 Map.addLayer(ndbi15,{'min':-0.5197, 'max':0.664},'NDBI 2015');
 Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
 
-//Calculate a confusion matrix
-var accuracyMatrix = trained.confusionMatrix();
-print('Resubstitution error matrix: ', accuracyMatrix);
+// //Calculate a confusion matrix
+// var accuracyMatrix = trained.confusionMatrix();
+// print('Resubstitution error matrix: ', accuracyMatrix);
 
-//Estimate the overall accuracy rate
-var overallAccuracy = accuracyMatrix.accuracy();
-print('Training overall accuracy: ', overallAccuracy);
-
-//Why is my classifier 100% correct???!!!!
+// //Estimate the overall accuracy rate
+// var overallAccuracy = accuracyMatrix.accuracy();
+// print('Training overall accuracy: ', overallAccuracy);
 
 
 //How big is urban area??? And it's not working...
@@ -1528,13 +1530,13 @@ var urban_Shanghai2015 = urban_Shanghai2015masked.clip(buffer_Shanghai);
 
 var urbanLandUseArea= urban_Shanghai2015.multiply(ee.Image.pixelArea());
 
-var stats = urbanLandUseArea.reduceRegion(
+var stats15 = urbanLandUseArea.reduceRegion(
 {
-'reducer': ee.Reducer.count(),
+'reducer': ee.Reducer.sum(),
 'scale': 30,
 'geometry': buffer_Shanghai,
 'maxPixels': 1e9
 });
-print(stats);
+print(stats15);
 
-print('urban area: ' + stats.getInfo() + ' square meters');
+print('urban area: ' + stats15.getInfo() + ' square meters');
