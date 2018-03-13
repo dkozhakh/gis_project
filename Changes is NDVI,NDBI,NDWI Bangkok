@@ -27,14 +27,14 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 });
 
 
-// //NDVI
-// var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']);
-// var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
-// ndvi15.getInfo;// aha!!!It is an image!!!
+//NDVI
+var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']);
+var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
+ndvi15.getInfo;// aha!!!It is an image!!!
 
-// Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2015');
-// Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2000');
-// //Decrease in vegetation
+Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2015');
+Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2000');
+//Decrease in vegetation
 
 // var difference = ndvi00.subtract(ndvi15);
 // var decrease = difference.gt(0.1);
@@ -67,25 +67,50 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 //   });
   
 
-//NDBI
-var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']);
-var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']);
+// //NDBI
+// var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']);
+// var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']);
 
-Map.addLayer(ndbi15,{}, 'NDBI 2015');
-Map.addLayer(ndbi00,{}, 'NDBI 2000');
-//Increase in built-up areas
+// Map.addLayer(ndbi15,{}, 'NDBI 2015');
+// Map.addLayer(ndbi00,{}, 'NDBI 2000');
+// //Increase in built-up areas
 
-var difference_ndbi = ndbi00.subtract(ndbi15);
-var increase_ndbi = increase_ndbi.gt(0.1);
+// var difference_ndbi = ndbi00.subtract(ndbi15);
+// var increase_ndbi = difference_ndbi.lt(-0.1);
 
-Map.addLayer(increase_ndbi.mask(decrease_ndbi), {'palette': 'FF7F50'}, 'increase in NDBI 2000-2015');
+// Map.addLayer(increase_ndbi.mask(increase_ndbi), {'palette': 'FF7F50'}, 'increase in NDBI 2000-2015');
+// //IS there a way to exclude water from NDBI???
 
+// //Export images
+// Export.image.toDrive(
+//   {image: increase_ndbi,
+//     description: 'increase_in_NDBI_Bangkok2000_2015',
+//     fileNamePrefix: 'increase_in_NDBI_Bangkok2000_2015',
+//     region: buffer_Bangkok,
+//     scale: 30, 
+//     maxPixels: 1e9
+//   });
+  
 
-//Increase in vegetation
+// //Decrease in built-up areas
 
-var decrease_ndbi = difference_ndbi.lt(-0.5);
-Map.addLayer(decrease_ndbi.mask(decrease_ndbi), {'palette': '6495ED'}, 'decrease in NDBI 2000-2015');
+// var decrease_ndbi = difference_ndbi.gt(0.5);
+// Map.addLayer(decrease_ndbi.mask(decrease_ndbi), {'palette': '6495ED'}, 'decrease in NDBI 2000-2015');
+
+// Export.image.toDrive(
+//   {image: decrease_ndbi,
+//     description: 'decrease_in_NDBI_Bangkok2000_2015',
+//     fileNamePrefix: 'decrease_in_NDBI_Bangkok2000_2015',
+//     region: buffer_Bangkok,
+//     scale: 30, 
+//     maxPixels: 1e9
+//   });
+
 //NDWI
 var ndwi15 = l7Composite15.normalizedDifference(['B2', 'B4']);
 var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']);
+
+Map.addLayer(ndwi15,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2015');
+Map.addLayer(ndwi00,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2000');
+
 
