@@ -61,18 +61,18 @@ Map.addLayer(increase.mask(increase), {'palette': '00FF00'}, 'increase in NDVI 2
 //Export images
 Export.image.toDrive(
   {image: increase,
-    description: 'increase_in_NDVI_Moscow2000_2015',
-    fileNamePrefix: 'increase_in_NDVI_Moscow2000_2015',
-    region: buffer_Moscow,
+    description: 'increase_in_NDVI_Shanghai2000_2015',
+    fileNamePrefix: 'increase_in_NDVI_Shanghai2000_2015',
+    region: buffer_Shanghai,
     scale: 30, 
     maxPixels: 1e9
   });
   
 Export.image.toDrive(
   {image: decrease,
-    description: 'decrease_in_NDVI_Moscow2000_2015',
-    fileNamePrefix: 'decrease_in_NDVI_Moscow2000_2015',
-    region: buffer_Moscow,
+    description: 'decrease_in_NDVI_Shanghai2000_2015',
+    fileNamePrefix: 'decrease_in_NDVI_Shanghai2000_2015',
+    region: buffer_Shanghai,
     scale: 30, 
     maxPixels: 1e9
   });
@@ -122,3 +122,38 @@ Export.image.toDrive(
 
 var ndwi15 = l7Composite15.normalizedDifference(['B2', 'B4']).rename('NDWI');
 var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']).rename('NDWI');
+
+Map.addLayer(ndwi15,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2015');
+Map.addLayer(ndwi00,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2000');
+
+//Decrease in water bodies
+
+var difference = ndwi00.subtract(ndwi15);
+var decrease_ndwi = difference.gt(0.1);
+
+Map.addLayer(decrease_ndwi.mask(decrease_ndwi), {'palette': 'FF0000'}, 'decrease in NDWI 2000-2015');
+
+Export.image.toDrive(
+  {image: decrease_ndwi,
+    description: 'decrease_in_NDWI_Moscow_2015',
+    fileNamePrefix: 'decrease_in_NDWI_Moscow_2015',
+    region: buffer_Moscow,
+    scale: 30, 
+    maxPixels: 1e9
+  });
+
+
+//Increase in water bodies
+
+var increase_ndwi = difference.lt(-0.5);
+Map.addLayer(increase_ndwi.mask(increase_ndwi), {'palette': '00FF00'}, 'increase in NDWI 2000-2015');
+
+//Export images
+Export.image.toDrive(
+  {image: increase_ndwi,
+    description: 'increase_in_NDWI_Moscow2000_2015',
+    fileNamePrefix: 'increase_in_NDWI_Moscow2000_2015',
+    region: buffer_Moscow,
+    scale: 30, 
+    maxPixels: 1e9
+  });
