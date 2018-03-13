@@ -60,25 +60,61 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 // //Export images
 // Export.image.toDrive(
 //   {image: increase,
-//     description: 'increase_in_NDVI_Bangkok2000_2015',
-//     fileNamePrefix: 'increase_in_NDVI_Bangkok2000_2015',
-//     region: buffer_Bangkok,
+//     description: 'increase_in_NDVI_Moscow2000_2015',
+//     fileNamePrefix: 'increase_in_NDVI_Moscow2000_2015',
+//     region: buffer_Moscow,
 //     scale: 30, 
 //     maxPixels: 1e9
 //   });
   
 // Export.image.toDrive(
 //   {image: decrease,
-//     description: 'decrease_in_NDVI_Bangkok2000_2015',
-//     fileNamePrefix: 'decrease_in_NDVI_Bangkok2000_2015',
-//     region: buffer_Bangkok,
+//     description: 'decrease_in_NDVI_Moscow2000_2015',
+//     fileNamePrefix: 'decrease_in_NDVI_Moscow2000_2015',
+//     region: buffer_Moscow,
 //     scale: 30, 
 //     maxPixels: 1e9
 //   });
 
-//NDBI
-var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']).rename('NDBI');
-var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']).rename('NDBI');
+// //NDBI
+// var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']).rename('NDBI');
+// var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']).rename('NDBI');
+// Map.addLayer(ndbi15,{}, 'NDBI 2015');
+// Map.addLayer(ndbi00,{}, 'NDBI 2000');
+
+// //Increase in built-up areas
+
+// var difference_ndbi = ndbi00.subtract(ndbi15);
+// var increase_ndbi = difference_ndbi.lt(-0.1);
+
+// Map.addLayer(increase_ndbi.mask(increase_ndbi), {'palette': 'FF7F50'}, 'increase in NDBI 2000-2015');
+// //IS there a way to exclude water from NDBI???
+
+// //Export images
+// Export.image.toDrive(
+//   {image: increase_ndbi,
+//     description: 'increase_in_NDBI_Moscow2000_2015',
+//     fileNamePrefix: 'increase_in_NDBI_Moscow2000_2015',
+//     region: buffer_Moscow,
+//     scale: 30, 
+//     maxPixels: 1e9
+//   });
+  
+
+// //Decrease in built-up areas
+
+// var decrease_ndbi = difference_ndbi.gt(0.5);
+// Map.addLayer(decrease_ndbi.mask(decrease_ndbi), {'palette': '6495ED'}, 'decrease in NDBI 2000-2015');
+
+// Export.image.toDrive(
+//   {image: decrease_ndbi,
+//     description: 'decrease_in_NDBI_Moscow2000_2015',
+//     fileNamePrefix: 'decrease_in_NDBI_Moscow2000_2015',
+//     region: buffer_Moscow,
+//     scale: 30, 
+//     maxPixels: 1e9
+//   });
+
 
 //NDWI
 
