@@ -29,11 +29,43 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 
 //NDVI
 var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']);
-print(ndvi15);//doesnt print
 var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
-// var max_ndvi15 = ndvi15.max();
-// var max_ndvi00 = ndvi00.max();
-Map.addLayer(ndvi15);//doesnt add the layer
+ndvi15.getInfo;// aha!!!It is an image!!!
+
+Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2015');
+Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2000');
+//Decrease in vegetation
+
+var difference = ndvi00.subtract(ndvi15);
+var decrease = difference.gt(0.1);
+
+Map.addLayer(decrease.mask(decrease), {'palette': 'FF0000'}, 'decrease in NDVI 2000-2015');
+
+
+//Increase in vegetation
+
+var increase = difference.lt(-0.5);
+Map.addLayer(increase.mask(increase), {'palette': '00FF00'}, 'increase in NDVI 2000-2015');
+
+//Export images
+Export.image.toDrive(
+  {image: increase,
+    description: 'increase_in_NDVI_Bangkok2000_2015',
+    fileNamePrefix: 'increase_in_NDVI_Bangkok2000_2015',
+    region: buffer_Bangkok,
+    scale: 30, 
+    maxPixels: 1e9
+  });
+  
+ Export.image.toDrive(
+  {image: decrease,
+    description: 'decrease_in_NDVI_Bangkok2000_2015',
+    fileNamePrefix: 'decrease_in_NDVI_Bangkok2000_2015',
+    region: buffer_Bangkok,
+    scale: 30, 
+    maxPixels: 1e9
+  });
+  
 
 //NDBI
 var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']);
