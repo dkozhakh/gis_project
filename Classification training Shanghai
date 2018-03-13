@@ -1510,6 +1510,33 @@ Export.image.toDrive(
     maxPixels: 1e9
   });
   
+  Export.image.toDrive(
+  {image: classified2010,
+    description: 'BU Shanghai,2010',
+    fileNamePrefix: 'bu_Shanghai_2010',
+    region: buffer_Shanghai,
+    scale: 30, 
+    maxPixels: 1e9
+  });
+  
+    Export.image.toDrive(
+  {image: classified2005,
+    description: 'BU Shanghai,2005',
+    fileNamePrefix: 'bu_Shanghai_2005',
+    region: buffer_Shanghai,
+    scale: 30, 
+    maxPixels: 1e9
+  });
+  
+    Export.image.toDrive(
+  {image: classified2000,
+    description: 'BU Shanghai,2000',
+    fileNamePrefix: 'bu_Shanghai_2000',
+    region: buffer_Shanghai,
+    scale: 30, 
+    maxPixels: 1e9
+  });
+  
   
   
 Map.addLayer(ndbi15,{'min':-0.5197, 'max':0.664},'NDBI 2015');
