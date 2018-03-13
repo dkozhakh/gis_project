@@ -27,13 +27,13 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 });
 
 
-//NDVI
-var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']);
-var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
-ndvi15.getInfo;// aha!!!It is an image!!!
+// //NDVI
+// var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']);
+// var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
+// ndvi15.getInfo;// aha!!!It is an image!!!
 
-Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2015');
-Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2000');
+// Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2015');
+// Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2000');
 //Decrease in vegetation
 
 // var difference = ndvi00.subtract(ndvi15);
@@ -112,5 +112,17 @@ var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']);
 
 Map.addLayer(ndwi15,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2015');
 Map.addLayer(ndwi00,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2000');
+
+var difference = ndwi00.subtract(ndwi15);
+var decrease_ndwi = difference.gt(0.1);
+
+Map.addLayer(decrease_ndwi.mask(decrease_ndwi), {'palette': 'FF0000'}, 'decrease in NDWI 2000-2015');
+
+
+//Increase in vegetation
+
+var increase_ndwi = difference.lt(-0.5);
+Map.addLayer(increase_ndwi.mask(increase_ndwi), {'palette': '00FF00'}, 'increase in NDWI 2000-2015');
+
 
 
