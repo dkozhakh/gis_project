@@ -1,0 +1,50 @@
+//centering at Bangkok, Thailand
+var roi_Shanghai = ee.Geometry.Point(121.474674768, 31.2411740353);
+var buffer_Shanghai = roi_Shanghai.buffer(15000);
+Map.addLayer(buffer_Shanghai,{}, "Shanghai");
+
+Map.setCenter(121.474674768,31.2411740353, 10);
+//Filtering to 2000, 2005, 2010, 2015 summer
+var L7Filtered2015 = l7Raw.filterDate('2015-06-01','2015-08-31').filterBounds(buffer_Shanghai);
+var L7Filtered2010 = l7Raw.filterDate('2010-06-01','2010-08-31').filterBounds(buffer_Shanghai);
+var L7Filtered2005 = l7Raw.filterDate('2005-06-01','2005-08-31').filterBounds(buffer_Shanghai);
+var L7Filtered2000 = l7Raw.filterDate('2000-06-01','2000-08-31').filterBounds(buffer_Shanghai);
+
+
+//Creating Simple Composite for cleaner image
+
+var l7Composite15= ee.Algorithms.Landsat.simpleComposite({
+  collection: L7Filtered2015,
+  asFloat: true
+});
+
+Map.addLayer(l7Composite15,{'bands':['B3','B2','B1']},'Shanghai Summer 2015');
+var l7Composite10= ee.Algorithms.Landsat.simpleComposite({
+  collection: L7Filtered2010,
+  asFloat: true
+});
+
+var l7Composite05= ee.Algorithms.Landsat.simpleComposite({
+  collection: L7Filtered2005,
+  asFloat: true
+});
+
+var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
+  collection: L7Filtered2000,
+  asFloat: true
+});
+
+//Now calculate NDVI, NDWI, NDBI
+
+//NDVI
+var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']).rename('NDVI');
+var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']).rename('NDVI');
+
+//NDBI
+var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']).rename('NDBI');
+var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']).rename('NDBI');
+
+//NDWI
+
+var ndwi15 = l7Composite15.normalizedDifference(['B2', 'B4']).rename('NDWI');
+var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']).rename('NDWI');
