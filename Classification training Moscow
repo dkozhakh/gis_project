@@ -1536,6 +1536,32 @@ Export.image.toDrive(
     maxPixels: 1e9
   });
   
+  Export.image.toDrive(
+  {image: classified2010,
+    description: 'BU Moscow,2010',
+    fileNamePrefix: 'bu_moscow_2010',
+    region: buffer_Moscow,
+    scale: 30, 
+    maxPixels: 1e9
+  });
+  
+   Export.image.toDrive(
+  {image: classified2005,
+    description: 'BU Moscow,2005',
+    fileNamePrefix: 'bu_moscow_2005',
+    region: buffer_Moscow,
+    scale: 30, 
+    maxPixels: 1e9
+  });
+  
+   Export.image.toDrive(
+  {image: classified2000,
+    description: 'BU Moscow,2000',
+    fileNamePrefix: 'bu_moscow_2000',
+    region: buffer_Moscow,
+    scale: 30, 
+    maxPixels: 1e9
+  });
   
   
 Map.addLayer(ndbi15,{'min':-0.5197, 'max':0.664},'NDBI 2015');
@@ -1553,6 +1579,7 @@ Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
 
 
 //How big is urban area??? And it's not working...
+//2015 Area
 var urban_Moscow2015masked = classified2015.mask(classified2015);
 var urban_Moscow2015 = urban_Moscow2015masked.clip(buffer_Moscow);
 
@@ -1568,6 +1595,58 @@ var stats = urbanLandUseArea.reduceRegion(
 print(stats);
 
 print('urban area: ' + stats.getInfo() + ' square meters');
+
+//2010 Area
+var urban_Moscow2010masked = classified2010.mask(classified2010);
+var urban_Moscow2010 = urban_Moscow2010masked.clip(buffer_Moscow);
+
+var urbanLandUseArea= urban_Moscow2010.multiply(ee.Image.pixelArea());
+
+var stats2010 = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'scale': 30,
+'geometry': buffer_Moscow,
+'maxPixels': 1e9
+});
+print(stats2010);
+
+print('urban area: ' + stats2010.getInfo() + ' square meters');
+
+//2005 Area
+var urban_Moscow2005masked = classified2005.mask(classified2005);
+var urban_Moscow2005 = urban_Moscow2005masked.clip(buffer_Moscow);
+
+var urbanLandUseArea= urban_Moscow2005.multiply(ee.Image.pixelArea());
+
+var stats2005 = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'scale': 30,
+'geometry': buffer_Moscow,
+'maxPixels': 1e9
+});
+print(stats2005);
+
+print('urban area: ' + stats2005.getInfo() + ' square meters');
+
+//2000 Area
+var urban_Moscow2000masked = classified2000.mask(classified2000);
+var urban_Moscow2000 = urban_Moscow2000masked.clip(buffer_Moscow);
+
+var urbanLandUseArea= urban_Moscow2000.multiply(ee.Image.pixelArea());
+
+var stats2000 = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'scale': 30,
+'geometry': buffer_Moscow,
+'maxPixels': 1e9
+});
+print(stats2000);
+
+print('urban area: ' + stats2000.getInfo() + ' square meters');
+
 
 Map.addLayer(L7Filtered2015,{'bands':['B3', 'B2', 'B1']},'Moscow summer 20015');
 
