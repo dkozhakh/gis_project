@@ -1544,22 +1544,60 @@ Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
 // //Why is my classifier 100% correct???!!!! NOw I dont see my classifier!!!
 
 
-// //How big is urban area??? And it's not working...
-// var urban_Bangkok2015masked = classified2015.mask(classified2015);
-// var urban_Bangkok2015 = urban_Bangkok2015masked.clip(buffer_Bangkok);
+//How big is urban area??? 
+//Year 2015
+var urban_Bangkok2015masked = classified2015.mask(classified2015);
+var urban_Bangkok2015 = urban_Bangkok2015masked.clip(buffer_Bangkok);
 
-// var urbanLandUseArea= urban_Bangkok2015.multiply(ee.Image.pixelArea());
+var urbanLandUseArea= urban_Bangkok2015.multiply(ee.Image.pixelArea());
 
-// var stats = urbanLandUseArea.reduceRegion(
-// {
-// 'reducer': ee.Reducer.sum(),
-// 'scale': 30,
-// 'geometry': buffer_Bangkok,
-// 'maxPixels': 1e9
-// });
-// print(stats);
+var stats2015 = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'scale': 30,
+'geometry': buffer_Bangkok,
+'maxPixels': 1e9
+});
+print(stats2015);
 
-// print('urban area: ' + stats.getInfo() + ' square meters');
+print('urban area: ' + stats2015.getInfo() + ' square meters');
+
+//Year 2010
+var urban_Bangkok2010masked = classified2010.mask(classified2010);
+var urban_Bangkok2010 = urban_Bangkok2010masked.clip(buffer_Bangkok);
+
+var urbanLandUseArea= urban_Bangkok2010.multiply(ee.Image.pixelArea());
+
+var stats2010 = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'scale': 30,
+'geometry': buffer_Bangkok,
+'maxPixels': 1e9
+});
+print(stats2010);
+
+print('urban area: ' + stats2010.getInfo() + ' square meters');
+
+//Year 2005
+
+var urban_Bangkok2010masked = classified2010.mask(classified2010);
+var urban_Bangkok2010 = urban_Bangkok2010masked.clip(buffer_Bangkok);
+
+var urbanLandUseArea= urban_Bangkok2010.multiply(ee.Image.pixelArea());
+
+var stats2010 = urbanLandUseArea.reduceRegion(
+{
+'reducer': ee.Reducer.sum(),
+'scale': 30,
+'geometry': buffer_Bangkok,
+'maxPixels': 1e9
+});
+print(stats2010);
+
+print('urban area: ' + stats2010.getInfo() + ' square meters');
+
+
 
 // //Exporting to Assets
 // Export.image.toAsset({ 
@@ -1568,12 +1606,12 @@ Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
 //   description: 'built-up areas, Bangkok, 2015', assetId: 'BuiltUpAreasBangkok2015',
 //   scale: 30});
   
-// //Exporting to Google Drive
-// Export.image.toDrive(
-//   {image: classified2015,
-//     description: 'BU, Bangkok,2015',
-//     fileNamePrefix: 'bu_bangkok_2015',
-//     region: buffer_Bangkok,
-//     scale: 30, 
-//     maxPixels: 1e9
-//   }); 
+//Exporting to Google Drive
+Export.image.toDrive(
+  {image: classified2015,
+    description: 'BU, Bangkok,2015',
+    fileNamePrefix: 'bu_bangkok_2015',
+    region: buffer_Bangkok,
+    scale: 30, 
+    maxPixels: 1e9
+  }); 
