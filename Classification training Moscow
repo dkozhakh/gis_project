@@ -1459,7 +1459,9 @@ var ndwi10 = l7Composite10.normalizedDifference(['B2', 'B4']).rename('NDWI');
 var ndwi05 = l7Composite05.normalizedDifference(['B2', 'B4']).rename('NDWI');
 var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']).rename('NDWI');
 
-var landcover = BU_training.merge(NBU_training);
+var landcover_training = BU_training.merge(NBU_training);
+var landcover_validation = BU_validation.merge(NBU_validation);
+
 
 //SETTING BANDS
 var bands = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6_VCID_2', 'B7', 'NDVI','NDBI','NDWI'];
@@ -1473,13 +1475,19 @@ var input00 = l7Composite00.addBands(ndvi00).addBands(ndbi00).addBands(ndwi00);
 //Creating the training dataset
 
 var training = input15.select(bands).sampleRegions({
-collection: landcover,
+collection: landcover_training,
+properties: ['landcover'],
+scale: 30
+});
+
+var validation = input15.select(bands).sampleRegions({
+collection: landcover_validation,
 properties: ['landcover'],
 scale: 30
 });
 
 //Choosing classifier
-var classifier = ee.Classifier.randomForest({numberOfTrees: 20})
+var trained = ee.Classifier.randomForest({numberOfTrees: 20})
 .train({
 features: training,
 classProperty: 'landcover',
@@ -1487,7 +1495,7 @@ inputProperties: bands
 });
 
 //Getting trained classifier
-var trained = classifier.train(training, 'landcover', bands);
+// var trained = classifier.train(training, 'landcover', bands);
 
 //?????Do I put 'class' or 'landcover' in there???? Well, apparently landcover it is
 
@@ -1497,6 +1505,12 @@ var classified2000 = input00.select(bands).classify(trained);
 var classified2005 = input05.select(bands).classify(trained);
 var classified2010 = input10.select(bands).classify(trained);
 var classified2015 = input15.select(bands).classify(trained);
+
+//Map.addLayer(classified2000)
+var accuracyMoscow = validation.classify(trained);
+
+Export.table.toDrive(accuracyMoscow);
+
 
 //Mapping results
 
