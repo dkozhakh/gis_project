@@ -42,8 +42,8 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']).rename('NDVI');
 var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']).rename('NDVI');
 
-Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.1, 'max': 0.8},'NDVI 2015');
-Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.1, 'max': 0.8},'NDVI 2000');
+Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.1, 'max': 0.7},'NDVI 2015');
+Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.1, 'max': 0.7},'NDVI 2000');
 
 //Decrease in vegetation
 
@@ -112,7 +112,7 @@ Export.image.toDrive(
   {image: decrease_ndbi,
     description: 'decrease_in_NDBI_Shanghai2000_2015',
     fileNamePrefix: 'decrease_in_NDBI_Shanghai2000_2015',
-    region: buffer_Moscow,
+    region: buffer_Shanghai,
     scale: 30, 
     maxPixels: 1e9
   });
