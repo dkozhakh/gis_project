@@ -1624,3 +1624,31 @@ Export.image.toDrive(
     scale: 30, 
     maxPixels: 1e9
   }); 
+  
+  
+  Export.image.toDrive(
+  {image: classified2010,
+    description: 'BU, Bangkok,2010',
+    fileNamePrefix: 'bu_bangkok_2010',
+    region: buffer_Bangkok,
+    scale: 30, 
+    maxPixels: 1e9
+  }); 
+  
+  Export.image.toDrive(
+  {image: classified2005,
+    description: 'BU, Bangkok,2005',
+    fileNamePrefix: 'bu_bangkok_2005',
+    region: buffer_Bangkok,
+    scale: 30, 
+    maxPixels: 1e9
+  }); 
+  
+  Export.image.toDrive(
+  {image: classified2000,
+    description: 'BU, Bangkok,2000',
+    fileNamePrefix: 'bu_bangkok_2000',
+    region: buffer_Bangkok,
+    scale: 30, 
+    maxPixels: 1e9
+  }); 
