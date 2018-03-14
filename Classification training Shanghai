@@ -1554,9 +1554,9 @@ Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
 var urban_Shanghai2015masked = classified2015.mask(classified2015);
 var urban_Shanghai2015 = urban_Shanghai2015masked.clip(buffer_Shanghai);
 
-var urbanLandUseArea= urban_Shanghai2015.multiply(ee.Image.pixelArea());
+var urbanLandUseArea15= urban_Shanghai2015.multiply(ee.Image.pixelArea());
 
-var stats15 = urbanLandUseArea.reduceRegion(
+var stats15 = urbanLandUseArea15.reduceRegion(
 {
 'reducer': ee.Reducer.sum(),
 'scale': 30,
@@ -1571,16 +1571,16 @@ print('urban area: ' + stats15.getInfo() + ' square meters');
 var urban_Shanghai2010masked = classified2010.mask(classified2010);
 var urban_Shanghai2010 = urban_Shanghai2010masked.clip(buffer_Shanghai);
 
-var urbanLandUseArea= urban_Shanghai2010.multiply(ee.Image.pixelArea());
+var urbanLandUseArea10= urban_Shanghai2010.multiply(ee.Image.pixelArea());
 
-var stats10 = urbanLandUseArea.reduceRegion(
+var stats10 = urbanLandUseArea10.reduceRegion(
 {
 'reducer': ee.Reducer.sum(),
 'scale': 30,
 'geometry': buffer_Shanghai,
 'maxPixels': 1e9
 });
-print(stats15);
+print(stats10);
 
 print('urban area: ' + stats10.getInfo() + ' square meters');
 
