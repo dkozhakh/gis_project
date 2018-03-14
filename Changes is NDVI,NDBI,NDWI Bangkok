@@ -2,7 +2,8 @@
 var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
     ndvi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDVI"),
     imageCollection = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA"),
-    ndwi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDWI");
+    ndwi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDWI"),
+    l7TOA = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
 
@@ -96,16 +97,20 @@ Map.addLayer(ndbi00,{}, 'NDBI 2000');
 
 // Building a time chart for NDVI
 
-var ndwi_l7_filtered = ndwi_l7.filterDate('2010-01-01', '2015-12-31');
+var l7TOA_filtered = l7TOA.filterDate('2010-01-01', '2015-12-31');
+
+var ndbi = l7TOA_filtered.normalizedDifference(['B5', 'B4']);
+
+var ndbi_filtered = ndbi('2010-01-01', '2015-12-31');
 var chartOptions = 
 {
-  title: 'Annual trends in NDVI',
+  title: 'Annual trends in NDBI',
   hAxis: {title: 'Years'},
-  vAxis: {title: 'NDVI index'},
+  vAxis: {title: 'NDBI index'},
   
 };
 
-var chart = ui.Chart.image.series(ndwi_l7_filtered, buffer_Bangkok, ee.Reducer.mean(), 30).setOptions(chartOptions);
+var chart = ui.Chart.image.series(ndbi_filtered, buffer_Bangkok, ee.Reducer.mean(), 30).setOptions(chartOptions);
 
 print(chart);
 
