@@ -8,10 +8,10 @@ Map.addLayer(buffer_Moscow,{}, "Moscow");
 Map.setCenter(37.6378811, 55.764303, 10);
 
 //Filtering to 2000, 2005, 2010, 2015 summer
-var L7Filtered2015 = l7Raw.filterDate('2015-06-01','2015-08-31').filterBounds(buffer_Moscow);
-var L7Filtered2010 = l7Raw.filterDate('2010-06-01','2010-08-31').filterBounds(buffer_Moscow);
-var L7Filtered2005 = l7Raw.filterDate('2005-06-01','2005-08-31').filterBounds(buffer_Moscow);
-var L7Filtered2000 = l7Raw.filterDate('2000-06-01','2000-08-31').filterBounds(buffer_Moscow);
+var L7Filtered2015 = l7Raw.filterDate('2015-01-01','2015-12-31').filterBounds(buffer_Moscow);
+var L7Filtered2010 = l7Raw.filterDate('2010-01-01','2010-12-31').filterBounds(buffer_Moscow);
+var L7Filtered2005 = l7Raw.filterDate('2005-01-01','2005-12-31').filterBounds(buffer_Moscow);
+var L7Filtered2000 = l7Raw.filterDate('2000-01-01','2000-12-31').filterBounds(buffer_Moscow);
 
 //Creating Simple Composite for cleaner image
 
