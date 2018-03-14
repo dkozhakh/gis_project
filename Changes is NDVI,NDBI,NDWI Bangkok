@@ -1,7 +1,8 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
     ndvi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDVI"),
-    imageCollection = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA");
+    imageCollection = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA"),
+    ndwi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDWI");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
 
@@ -92,6 +93,21 @@ var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']);
 
 Map.addLayer(ndbi15,{}, 'NDBI 2015');
 Map.addLayer(ndbi00,{}, 'NDBI 2000');
+
+// Building a time chart for NDVI
+
+var ndwi_l7_filtered = ndwi_l7.filterDate('2010-01-01', '2015-12-31');
+var chartOptions = 
+{
+  title: 'Annual trends in NDVI',
+  hAxis: {title: 'Years'},
+  vAxis: {title: 'NDVI index'},
+  
+};
+
+var chart = ui.Chart.image.series(ndwi_l7_filtered, buffer_Bangkok, ee.Reducer.mean(), 30).setOptions(chartOptions);
+
+print(chart);
 
 //Increase in built-up areas
 
