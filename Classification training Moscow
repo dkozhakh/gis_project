@@ -1583,26 +1583,26 @@ Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
 var urban_Moscow2015masked = classified2015.mask(classified2015);
 var urban_Moscow2015 = urban_Moscow2015masked.clip(buffer_Moscow);
 
-var urbanLandUseArea= urban_Moscow2015.multiply(ee.Image.pixelArea());
+var urbanLandUseArea15= urban_Moscow2015.multiply(ee.Image.pixelArea());
 
-var stats = urbanLandUseArea.reduceRegion(
+var stats15 = urbanLandUseArea15.reduceRegion(
 {
 'reducer': ee.Reducer.sum(),
 'scale': 30,
 'geometry': buffer_Moscow,
 'maxPixels': 1e9
 });
-print(stats);
+print(stats15);
 
-print('urban area: ' + stats.getInfo() + ' square meters');
+print('urban area: ' + stats15.getInfo() + ' square meters');
 
 //2010 Area
 var urban_Moscow2010masked = classified2010.mask(classified2010);
 var urban_Moscow2010 = urban_Moscow2010masked.clip(buffer_Moscow);
 
-var urbanLandUseArea= urban_Moscow2010.multiply(ee.Image.pixelArea());
+var urbanLandUseArea10= urban_Moscow2010.multiply(ee.Image.pixelArea());
 
-var stats2010 = urbanLandUseArea.reduceRegion(
+var stats2010 = urbanLandUseArea10.reduceRegion(
 {
 'reducer': ee.Reducer.sum(),
 'scale': 30,
@@ -1617,9 +1617,9 @@ print('urban area: ' + stats2010.getInfo() + ' square meters');
 var urban_Moscow2005masked = classified2005.mask(classified2005);
 var urban_Moscow2005 = urban_Moscow2005masked.clip(buffer_Moscow);
 
-var urbanLandUseArea= urban_Moscow2005.multiply(ee.Image.pixelArea());
+var urbanLandUseArea05= urban_Moscow2005.multiply(ee.Image.pixelArea());
 
-var stats2005 = urbanLandUseArea.reduceRegion(
+var stats2005 = urbanLandUseArea05.reduceRegion(
 {
 'reducer': ee.Reducer.sum(),
 'scale': 30,
@@ -1634,9 +1634,9 @@ print('urban area: ' + stats2005.getInfo() + ' square meters');
 var urban_Moscow2000masked = classified2000.mask(classified2000);
 var urban_Moscow2000 = urban_Moscow2000masked.clip(buffer_Moscow);
 
-var urbanLandUseArea= urban_Moscow2000.multiply(ee.Image.pixelArea());
+var urbanLandUseArea00= urban_Moscow2000.multiply(ee.Image.pixelArea());
 
-var stats2000 = urbanLandUseArea.reduceRegion(
+var stats2000 = urbanLandUseArea00.reduceRegion(
 {
 'reducer': ee.Reducer.sum(),
 'scale': 30,
