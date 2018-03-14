@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
-    ndvi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDVI");
+    ndvi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDVI"),
+    imageCollection = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
 
