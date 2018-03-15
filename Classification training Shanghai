@@ -3716,21 +3716,21 @@ Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
 
 //How big is urban area??? And it's not working...
 //2015
-var urban_Shanghai2015masked = classified2015.mask(classified2015);
-var urban_Shanghai2015 = urban_Shanghai2015masked.clip(buffer_Shanghai);
+// var urban_Shanghai2015masked = classified2015.mask(classified2015);
+// var urban_Shanghai2015 = urban_Shanghai2015masked.clip(buffer_Shanghai);
 
-var urbanLandUseArea15= urban_Shanghai2015.multiply(ee.Image.pixelArea());
+// var urbanLandUseArea15= urban_Shanghai2015.multiply(ee.Image.pixelArea());
 
-var stats15 = urbanLandUseArea15.reduceRegion(
-{
-'reducer': ee.Reducer.sum(),
-'scale': 30,
-'geometry': buffer_Shanghai,
-'maxPixels': 1e9
-});
-print(stats15);
+// var stats15 = urbanLandUseArea15.reduceRegion(
+// {
+// 'reducer': ee.Reducer.sum(),
+// 'scale': 30,
+// 'geometry': buffer_Shanghai,
+// 'maxPixels': 1e9
+// });
+// print(stats15);
 
-print('urban area: ' + stats15.getInfo() + ' square meters');
+// print('urban area: ' + stats15.getInfo() + ' square meters');
 
 //2010
 var urban_Shanghai2010masked = classified2010.mask(classified2010);
@@ -3749,36 +3749,36 @@ print(stats10);
 
 print('urban area: ' + stats10.getInfo() + ' square meters');
 
-//2005
-var urban_Shanghai2005masked = classified2005.mask(classified2005);
-var urban_Shanghai2005 = urban_Shanghai2005masked.clip(buffer_Shanghai);
+// //2005
+// var urban_Shanghai2005masked = classified2005.mask(classified2005);
+// var urban_Shanghai2005 = urban_Shanghai2005masked.clip(buffer_Shanghai);
 
-var urbanLandUseArea= urban_Shanghai2005.multiply(ee.Image.pixelArea());
+// var urbanLandUseArea05= urban_Shanghai2005.multiply(ee.Image.pixelArea());
 
-var stats05 = urbanLandUseArea.reduceRegion(
-{
-'reducer': ee.Reducer.sum(),
-'scale': 30,
-'geometry': buffer_Shanghai,
-'maxPixels': 1e9
-});
-print(stats05);
+// var stats05 = urbanLandUseArea05.reduceRegion(
+// {
+// 'reducer': ee.Reducer.sum(),
+// 'scale': 30,
+// 'geometry': buffer_Shanghai,
+// 'maxPixels': 1e9
+// });
+// print(stats05);
 
-print('urban area: ' + stats05.getInfo() + ' square meters');
+// print('urban area: ' + stats05.getInfo() + ' square meters');
 
-//2000
-var urban_Shanghai2000masked = classified2000.mask(classified2000);
-var urban_Shanghai2000 = urban_Shanghai2000masked.clip(buffer_Shanghai);
+// //2000
+// var urban_Shanghai2000masked = classified2000.mask(classified2000);
+// var urban_Shanghai2000 = urban_Shanghai2000masked.clip(buffer_Shanghai);
 
-var urbanLandUseArea= urban_Shanghai2000.multiply(ee.Image.pixelArea());
+// var urbanLandUseArea00= urban_Shanghai2000.multiply(ee.Image.pixelArea());
 
-var stats00 = urbanLandUseArea.reduceRegion(
-{
-'reducer': ee.Reducer.sum(),
-'scale': 30,
-'geometry': buffer_Shanghai,
-'maxPixels': 1e9
-});
-print(stats00);
+// var stats00 = urbanLandUseArea00.reduceRegion(
+// {
+// 'reducer': ee.Reducer.sum(),
+// 'scale': 30,
+// 'geometry': buffer_Shanghai,
+// 'maxPixels': 1e9
+// });
+// print(stats00);
 
-print('urban area: ' + stats00.getInfo() + ' square meters');
+// print('urban area: ' + stats00.getInfo() + ' square meters');
