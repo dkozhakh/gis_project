@@ -3,7 +3,8 @@ var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
     ndvi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDVI"),
     imageCollection = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA"),
     ndwi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDWI"),
-    l7TOA = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA");
+    l7TOA = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA"),
+    l7Annual = ee.ImageCollection("LANDSAT/LE7_L1T_ANNUAL_TOA");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
 
@@ -31,10 +32,12 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 });
 
 
+
 //NDVI
 var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']);
 var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
 ndvi15.getInfo;// aha!!!It is an image!!!
+
 
 Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2015');
 Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2000');
@@ -95,24 +98,10 @@ var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']);
 Map.addLayer(ndbi15,{}, 'NDBI 2015');
 Map.addLayer(ndbi00,{}, 'NDBI 2000');
 
-// Building a time chart for NDVI
+//Building a time chart for NDBI
 
 
 var l7TOA_filtered = l7TOA.filterDate('2010-01-01', '2015-12-31');
-/*
-print(l7TOA_filtered.first())
-var add_NDBI = function(image){
-  return image.normalizedDifference(['B4', 'B3']).rename('NDVI')
-};
-
-var test = add_NDBI(l7TOA_filtered.first())
-
-print(test)
-*/
-var test1 = l7TOA_filtered.first()
-print(test1)
-var ndbi = test1.normalizedDifference(['B4', 'B3']).rename('NDVI')
-print(ndbi)
 
 
 var ndbi = l7TOA_filtered.expression(
