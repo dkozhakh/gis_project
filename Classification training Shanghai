@@ -3790,6 +3790,38 @@ var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
             {
               "landcover": 0,
               "system:index": "79"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[121.46225810050964, 31.22705960882515],
+                  [121.46217226982117, 31.226674281683582],
+                  [121.46262288093567, 31.226536664466533],
+                  [121.46273016929626, 31.22694034106826]]]),
+            {
+              "landcover": 0,
+              "system:index": "80"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[121.46503686904907, 31.22758255029008],
+                  [121.46430730819702, 31.22745410879484],
+                  [121.4645004272461, 31.227041259949274],
+                  [121.46525144577026, 31.226903643266635],
+                  [121.46539092063904, 31.22716052757879],
+                  [121.46492958068848, 31.22730731830083]]]),
+            {
+              "landcover": 0,
+              "system:index": "81"
+            }),
+        ee.Feature(
+            ee.Geometry.Polygon(
+                [[[121.4679765701294, 31.227178876431516],
+                  [121.46756887435913, 31.227013736628766],
+                  [121.46772980690002, 31.226637583778626],
+                  [121.46813750267029, 31.22689446881399]]]),
+            {
+              "landcover": 0,
+              "system:index": "82"
             })]);
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
@@ -3799,7 +3831,7 @@ Map.addLayer(buffer_Shanghai,{}, "Shanghai");
 
 Map.setCenter(121.474674768,31.2411740353, 10);
 //Filtering to 2000, 2005, 2010, 2015 summer
-var L7Filtered2015 = l7Raw.filterDate('2015-01-01','2015-12-31').filterBounds(buffer_Shanghai);
+var L7Filtered2015 = l7Raw.filterDate('2017-01-01','2017-12-31').filterBounds(buffer_Shanghai);
 var L7Filtered2010 = l7Raw.filterDate('2010-01-01','2010-12-31').filterBounds(buffer_Shanghai);
 var L7Filtered2005 = l7Raw.filterDate('2005-01-01','2005-12-31').filterBounds(buffer_Shanghai);
 var L7Filtered2000 = l7Raw.filterDate('2000-01-01','2000-12-31').filterBounds(buffer_Shanghai);
