@@ -97,11 +97,30 @@ Map.addLayer(ndbi00,{}, 'NDBI 2000');
 
 // Building a time chart for NDVI
 
+
 var l7TOA_filtered = l7TOA.filterDate('2010-01-01', '2015-12-31');
+/*
+print(l7TOA_filtered.first())
+var add_NDBI = function(image){
+  return image.normalizedDifference(['B4', 'B3']).rename('NDVI')
+};
 
-var ndbi = l7TOA_filtered.normalizedDifference(['B5', 'B4']);
+var test = add_NDBI(l7TOA_filtered.first())
 
-var ndbi_filtered = ndbi('2010-01-01', '2015-12-31');
+print(test)
+*/
+var test1 = l7TOA_filtered.first()
+print(test1)
+var ndbi = test1.normalizedDifference(['B4', 'B3']).rename('NDVI')
+print(ndbi)
+
+
+var ndbi = l7TOA_filtered.expression(
+'(SWIR - NIR) / (SWIR + NIR)', {
+'SWIR': l7TOA_filtered.select('B5'),
+'NIR': l7TOA_filtered.select('B4'),
+}).rename('NDBI');
+
 var chartOptions = 
 {
   title: 'Annual trends in NDBI',
@@ -110,83 +129,83 @@ var chartOptions =
   
 };
 
-var chart = ui.Chart.image.series(ndbi_filtered, buffer_Bangkok, ee.Reducer.mean(), 30).setOptions(chartOptions);
+var chart = ui.Chart.image.series(ndbi, buffer_Bangkok, ee.Reducer.mean(), 30).setOptions(chartOptions);
 
 print(chart);
 
-//Increase in built-up areas
+// //Increase in built-up areas
 
-var difference_ndbi = ndbi00.subtract(ndbi15);
-var increase_ndbi = difference_ndbi.lt(-0.1);
+// var difference_ndbi = ndbi00.subtract(ndbi15);
+// var increase_ndbi = difference_ndbi.lt(-0.1);
 
-//NDWI to mask river to get rid of it in the map
-var ndwi15 = l7Composite15.normalizedDifference(['B2', 'B4']);
-var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']);
-var ndbi_river = ndwi15.lt(0.1);
-Map.addLayer(increase_ndbi.mask(increase_ndbi).updateMask(ndbi_river), {'palette': 'FF7F50'}, 'increase in NDBI 2000-2015');
-//IS there a way to exclude water from NDBI???
+// //NDWI to mask river to get rid of it in the map
+// var ndwi15 = l7Composite15.normalizedDifference(['B2', 'B4']);
+// var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']);
+// var ndbi_river = ndwi15.lt(0.1);
+// Map.addLayer(increase_ndbi.mask(increase_ndbi).updateMask(ndbi_river), {'palette': 'FF7F50'}, 'increase in NDBI 2000-2015');
+// //IS there a way to exclude water from NDBI???
 
-//Export images
-Export.image.toDrive(
-  {image: increase_ndbi,
-    description: 'increase_in_NDBI_Bangkok2000_2015',
-    fileNamePrefix: 'increase_in_NDBI_Bangkok2000_2015',
-    region: buffer_Bangkok,
-    scale: 30, 
-    maxPixels: 1e9
-  });
+// //Export images
+// Export.image.toDrive(
+//   {image: increase_ndbi,
+//     description: 'increase_in_NDBI_Bangkok2000_2015',
+//     fileNamePrefix: 'increase_in_NDBI_Bangkok2000_2015',
+//     region: buffer_Bangkok,
+//     scale: 30, 
+//     maxPixels: 1e9
+//   });
   
 
-//Decrease in built-up areas
+// //Decrease in built-up areas
 
-var decrease_ndbi = difference_ndbi.gt(0.5);
-Map.addLayer(decrease_ndbi.mask(decrease_ndbi), {'palette': '6495ED'}, 'decrease in NDBI 2000-2015');
+// var decrease_ndbi = difference_ndbi.gt(0.5);
+// Map.addLayer(decrease_ndbi.mask(decrease_ndbi), {'palette': '6495ED'}, 'decrease in NDBI 2000-2015');
 
-Export.image.toDrive(
-  {image: decrease_ndbi,
-    description: 'decrease_in_NDBI_Bangkok2000_2015',
-    fileNamePrefix: 'decrease_in_NDBI_Bangkok2000_2015',
-    region: buffer_Bangkok,
-    scale: 30, 
-    maxPixels: 1e9
-  });
-
-
-
-Map.addLayer(ndwi15,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2015');
-Map.addLayer(ndwi00,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2000');
-
-//Decrease in water bodies
-
-var difference = ndwi00.subtract(ndwi15);
-var decrease_ndwi = difference.gt(0.1);
-
-Map.addLayer(decrease_ndwi.mask(decrease_ndwi), {'palette': 'FF0000'}, 'decrease in NDWI 2000-2015');
-
-Export.image.toDrive(
-  {image: decrease_ndwi,
-    description: 'decrease_in_NDWI_Bangkok2000_2015',
-    fileNamePrefix: 'decrease_in_NDWI_Bangkok2000_2015',
-    region: buffer_Bangkok,
-    scale: 30, 
-    maxPixels: 1e9
-  });
+// Export.image.toDrive(
+//   {image: decrease_ndbi,
+//     description: 'decrease_in_NDBI_Bangkok2000_2015',
+//     fileNamePrefix: 'decrease_in_NDBI_Bangkok2000_2015',
+//     region: buffer_Bangkok,
+//     scale: 30, 
+//     maxPixels: 1e9
+//   });
 
 
-//Increase in water bodies
 
-var increase_ndwi = difference.lt(-0.5);
-Map.addLayer(increase_ndwi.mask(increase_ndwi), {'palette': '00FF00'}, 'increase in NDWI 2000-2015');
+// Map.addLayer(ndwi15,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2015');
+// Map.addLayer(ndwi00,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2000');
 
-//Export images
-Export.image.toDrive(
-  {image: increase_ndwi,
-    description: 'increase_in_NDWI_Bangkok2000_2015',
-    fileNamePrefix: 'increase_in_NDWI_Bangkok2000_2015',
-    region: buffer_Bangkok,
-    scale: 30, 
-    maxPixels: 1e9
-  });
+// //Decrease in water bodies
+
+// var difference = ndwi00.subtract(ndwi15);
+// var decrease_ndwi = difference.gt(0.1);
+
+// Map.addLayer(decrease_ndwi.mask(decrease_ndwi), {'palette': 'FF0000'}, 'decrease in NDWI 2000-2015');
+
+// Export.image.toDrive(
+//   {image: decrease_ndwi,
+//     description: 'decrease_in_NDWI_Bangkok2000_2015',
+//     fileNamePrefix: 'decrease_in_NDWI_Bangkok2000_2015',
+//     region: buffer_Bangkok,
+//     scale: 30, 
+//     maxPixels: 1e9
+//   });
+
+
+// //Increase in water bodies
+
+// var increase_ndwi = difference.lt(-0.5);
+// Map.addLayer(increase_ndwi.mask(increase_ndwi), {'palette': '00FF00'}, 'increase in NDWI 2000-2015');
+
+// //Export images
+// Export.image.toDrive(
+//   {image: increase_ndwi,
+//     description: 'increase_in_NDWI_Bangkok2000_2015',
+//     fileNamePrefix: 'increase_in_NDWI_Bangkok2000_2015',
+//     region: buffer_Bangkok,
+//     scale: 30, 
+//     maxPixels: 1e9
+//   });
 
 
 
