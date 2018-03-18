@@ -128,25 +128,6 @@ var chart = ui.Chart.image.series(imageWithNDBI, buffer_Bangkok, ee.Reducer.mean
 print(chart);
 
 
-
-// var ndbi = l7TOA_filtered.expression(
-// '(SWIR - NIR) / (SWIR + NIR)', {
-// 'SWIR': l7TOA_filtered.select('B5'),
-// 'NIR': l7TOA_filtered.select('B4'),
-// }).rename('NDBI');
-
-// var chartOptions = 
-// {
-//   title: 'Annual trends in NDBI',
-//   hAxis: {title: 'Years'},
-//   vAxis: {title: 'NDBI index'},
-  
-// };
-
-// var chart = ui.Chart.image.series(ndbi, buffer_Bangkok, ee.Reducer.mean(), 30).setOptions(chartOptions);
-
-// print(chart);
-
 //Increase in built-up areas
 
 var difference_ndbi = ndbi00.subtract(ndbi15);
