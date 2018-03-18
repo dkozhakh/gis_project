@@ -1,5 +1,6 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T");
+var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
+    ndvi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDVI");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 var roi_Moscow = ee.Geometry.Point(37.6378811, 55.764303);
 var buffer_Moscow = roi_Moscow.buffer(15000);
@@ -43,6 +44,21 @@ var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']).rename('NDVI');
 
 Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.1, 'max': 0.8},'NDVI 2015');
 Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.1, 'max': 0.8},'NDVI 2000');
+
+// Building a time chart for NDVI
+
+var ndvi_l7_filtered = ndvi_l7.filterDate('2000-01-01', '2015-12-31');
+var chartOptions = 
+{
+  title: 'Annual trends in NDVI',
+  hAxis: {title: 'Years'},
+  vAxis: {title: 'NDVI index'},
+  
+};
+
+var chart = ui.Chart.image.series(ndvi_l7_filtered, buffer_Moscow, ee.Reducer.mean(), 30).setOptions(chartOptions);
+
+print(chart);
 
 //Decrease in vegetation
 
