@@ -1,6 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
 var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
-    ndvi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDVI");
+    ndvi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDVI"),
+    l7TOA = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 var roi_Moscow = ee.Geometry.Point(37.6378811, 55.764303);
 var buffer_Moscow = roi_Moscow.buffer(15000);
@@ -97,6 +98,41 @@ var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']).rename('NDBI');
 var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']).rename('NDBI');
 Map.addLayer(ndbi15,{}, 'NDBI 2015');
 Map.addLayer(ndbi00,{}, 'NDBI 2000');
+
+//Building time series chart for NDBI
+var l7 = l7TOA.filterDate('2000-01-01','2015-12-31');
+
+var addNDBI = function(image)
+{
+  var ndbiPerImage = image.expression(
+    '((MIR - NIR) / (MIR + NIR))',
+    {
+      'NIR': image.select('B4'),
+      'MIR': image.select('B5')
+    }).rename('NDBI');
+    return image.addBands(ndbiPerImage);
+};
+
+var imageWithNDBI = l7.map(addNDBI);
+
+ var meanNDBI = imageWithNDBI.reduceRegion(
+   {
+     'reducer': ee.Reduce.mean(),
+     'geometry': buffer.Moscow.geometry(),
+     'maxPixels': 1e9
+ });
+
+var chartOptions = 
+{
+  title: 'Annual trends in NDBI',
+  hAxis: {title: 'Years'},
+  vAxis: {title: 'NDBI index'},
+  
+};
+
+var chart = ui.Chart.image.series(meanNDBI, buffer_Moscow,(),30).setOptions(chartOptions);
+
+print(chart);
 
 //Increase in built-up areas
 
