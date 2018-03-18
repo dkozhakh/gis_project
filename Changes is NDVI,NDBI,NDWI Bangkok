@@ -100,8 +100,6 @@ Map.addLayer(ndbi00,{}, 'NDBI 2000');
 
 //Building a time chart for NDBI
 
-
-// var l7TOA_filtered = l7TOA.filterDate('2010-01-01', '2015-12-31');
 var l7 = l7TOA.filterDate('2000-01-01','2015-12-31');
 
 var addNDBI = function(image)
@@ -116,15 +114,6 @@ var addNDBI = function(image)
 };
 
 var imageWithNDBI = l7.map(addNDBI);
-
-// print(imageWithNDBI);
-
-// print(buffer_Bangkok);
-
-// print(ui.Chart.image.series(
-//   imageWithNDBI, 
-//   buffer_Bangkok, 
-//   ee.Reducer.mean(), 30));
 
 var chartOptions = 
 {
