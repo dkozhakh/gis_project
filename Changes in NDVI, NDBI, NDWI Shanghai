@@ -1,5 +1,7 @@
 /**** Start of imports. If edited, may not auto-convert in the playground. ****/
-var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T");
+var l7Raw = ee.ImageCollection("LANDSAT/LE7_L1T"),
+    ndvi_l7 = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_NDVI"),
+    l7TOA = ee.ImageCollection("LANDSAT/LE7_L1T_32DAY_TOA");
 /***** End of imports. If edited, may not auto-convert in the playground. *****/
 //centering at Bangkok, Thailand
 var roi_Shanghai = ee.Geometry.Point(121.474674768, 31.2411740353);
@@ -45,6 +47,21 @@ var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']).rename('NDVI');
 Map.addLayer(ndvi15,{'palette':'4B0082, 00FF00', 'min': 0.1, 'max': 0.7},'NDVI 2015');
 Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.1, 'max': 0.7},'NDVI 2000');
 
+// Building a time chart for NDVI
+
+var ndvi_l7_filtered = ndvi_l7.filterDate('2000-01-01', '2015-12-31');
+var chartOptions = 
+{
+  title: 'Annual trends in NDVI',
+  hAxis: {title: 'Years'},
+  vAxis: {title: 'NDVI index'},
+  
+};
+
+var chart = ui.Chart.image.series(ndvi_l7_filtered, buffer_Shanghai, ee.Reducer.mean(), 30).setOptions(chartOptions);
+
+print(chart);
+
 //Decrease in vegetation
 
 var difference = ndvi00.subtract(ndvi15);
@@ -84,6 +101,35 @@ var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']).rename('NDBI');
 Map.addLayer(ndbi15,{}, 'NDBI 2015');
 Map.addLayer(ndbi00,{}, 'NDBI 2000');
 
+//Building time series chart for NDBI
+var l7 = l7TOA.filterDate('2000-01-01','2015-12-31');
+
+var addNDBI = function(image)
+{
+  var ndbiPerImage = image.expression(
+    '((MIR - NIR) / (MIR + NIR))',
+    {
+      'NIR': image.select('B4'),
+      'MIR': image.select('B5')
+    }).rename('NDBI');
+    return image.addBands(ndbiPerImage);
+};
+
+var imageWithNDBI = l7.map(addNDBI);
+
+
+var chartOptions = 
+{
+  title: 'Annual trends in NDBI',
+  hAxis: {title: 'Years'},
+  vAxis: {title: 'NDBI index'},
+  
+};
+
+var chart = ui.Chart.image.series(imageWithNDBI, buffer_Shanghai,ee.Reducer.mean(),30).setOptions(chartOptions);
+
+print(chart);
+
 //Increase in built-up areas
 
 var difference_ndbi = ndbi00.subtract(ndbi15);
@@ -122,6 +168,35 @@ Export.image.toDrive(
 
 var ndwi15 = l7Composite15.normalizedDifference(['B2', 'B4']).rename('NDWI');
 var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']).rename('NDWI');
+
+//time series chart for NDWI
+var addNDWI = function(image)
+{
+  var ndwiPerImage = image.expression(
+    '((GREEN - NIR) / (GREEN + NIR))',
+    {
+      'NIR': image.select('B4'),
+      'GREEN': image.select('B2')
+    }).rename('NDWI');
+    return image.addBands(ndwiPerImage);
+};
+
+var imageWithNDWI = l7.map(addNDWI);
+
+
+var chartOptions = 
+{
+  title: 'Annual trends in NDWI',
+  hAxis: {title: 'Years'},
+  vAxis: {title: 'NDWI index'},
+  
+};
+
+var chart = ui.Chart.image.series(imageWithNDWI, buffer_Shanghai, ee.Reducer.mean(), 30).setOptions(chartOptions);
+
+print(chart);
+
+
 
 Map.addLayer(ndwi15,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2015');
 Map.addLayer(ndwi00,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2000');
