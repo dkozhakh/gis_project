@@ -44,7 +44,7 @@ Map.addLayer(ndvi00,{'palette':'4B0082, 00FF00', 'min': 0.2, 'max': 0.9},'NDVI 2
 
 // Building a time chart for NDVI
 
-var ndvi_l7_filtered = ndvi_l7.filterDate('2010-01-01', '2015-12-31');
+var ndvi_l7_filtered = ndvi_l7.filterDate('2000-01-01', '2015-12-31');
 var chartOptions = 
 {
   title: 'Annual trends in NDVI',
@@ -231,6 +231,34 @@ Export.image.toDrive(
     scale: 30, 
     maxPixels: 1e9
   });
+
+
+//time series chart for NDWI
+var addNDWI = function(image)
+{
+  var ndwiPerImage = image.expression(
+    '((GREEN - NIR) / (GREEN + NIR))',
+    {
+      'NIR': image.select('B4'),
+      'GREEN': image.select('B2')
+    }).rename('NDWI');
+    return image.addBands(ndwiPerImage);
+};
+
+var imageWithNDWI = l7.map(addNDWI);
+
+
+var chartOptions = 
+{
+  title: 'Annual trends in NDWI',
+  hAxis: {title: 'Years'},
+  vAxis: {title: 'NDWI index'},
+  
+};
+
+var chart = ui.Chart.image.series(imageWithNDWI, buffer_Bangkok, ee.Reducer.mean(), 30).setOptions(chartOptions);
+
+print(chart);
 
 
 
