@@ -115,13 +115,6 @@ var addNDBI = function(image)
 
 var imageWithNDBI = l7.map(addNDBI);
 
- var meanNDBI = imageWithNDBI.reduceRegion(
-   {
-     'reducer': ee.Reduce.mean(),
-     'geometry': buffer.Moscow.geometry(),
-     'maxPixels': 1e9
- });
-
 var chartOptions = 
 {
   title: 'Annual trends in NDBI',
@@ -130,7 +123,7 @@ var chartOptions =
   
 };
 
-var chart = ui.Chart.image.series(meanNDBI, buffer_Moscow,(),30).setOptions(chartOptions);
+var chart = ui.Chart.image.series(imageWithNDBI, buffer_Moscow, ee.Reducer.mean(),37).setOptions(chartOptions);
 
 print(chart);
 
@@ -176,6 +169,33 @@ var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']).rename('NDWI');
 Map.addLayer(ndwi15,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2015');
 Map.addLayer(ndwi00,{'palette':'00FFFF, 00008B, 1E90FF'}, 'NDWI Bangkok 2000');
 
+//time series chart for NDWI
+
+var addNDWI = function(image)
+{
+  var ndwiPerImage = image.expression(
+    '((GREEN - NIR) / (GREEN + NIR))',
+    {
+      'NIR': image.select('B4'),
+      'GREEN': image.select('B2')
+    }).rename('NDWI');
+    return image.addBands(ndwiPerImage);
+};
+
+var imageWithNDWI = l7.map(addNDWI);
+
+
+var chartOptions = 
+{
+  title: 'Annual trends in NDWI',
+  hAxis: {title: 'Years'},
+  vAxis: {title: 'NDWI index'},
+  
+};
+
+var chart = ui.Chart.image.series(imageWithNDWI, buffer_Moscow, ee.Reducer.mean(), 37).setOptions(chartOptions);
+
+print(chart);
 //Decrease in water bodies
 
 var difference = ndwi00.subtract(ndwi15);
