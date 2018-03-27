@@ -1430,6 +1430,7 @@ var L7Filtered2000 = l7Raw.filterDate('2000-01-01','2000-12-31').filterBounds(bu
 Map.addLayer(L7Filtered2015,{},'Bangkok Summer 2015');
 Map.addLayer(L7Filtered2000,{},'Bangkok 2000');
 Map.addLayer(L7Filtered2005,{},'Bangkok 2005');
+
 //Creating Simple Composite for cleaner image
 
 var l7Composite15= ee.Algorithms.Landsat.simpleComposite({
@@ -1507,11 +1508,6 @@ classProperty: 'landcover',
 inputProperties: bands
 });
 
-//Getting trained classifier
-//var trained = classifier.train(training, 'landcover', bands);
-
-//?????Do I put 'class' or 'landcover' in there???? Well, apparently landcover it is
-
 //Classifying 2015,2010,2005,2000 with 2015 trained classifier
 
 var classified2000 = input00.select(bands).classify(trained);
@@ -1519,7 +1515,7 @@ var classified2005 = input05.select(bands).classify(trained);
 var classified2010 = input10.select(bands).classify(trained);
 var classified2015 = input15.select(bands).classify(trained);
 
-//Map.addLayer(classified2000)
+//Assessing accuracy of the classifier on a created validation dataset
 var accuracy2000 = validation.classify(trained);
 
 Export.table.toDrive(accuracy2000);
@@ -1534,16 +1530,6 @@ Map.addLayer(classified2000.mask(classified2000), {'min':0, 'max':1 , 'palette':
   
 Map.addLayer(ndbi15,{'min':-0.5197, 'max':0.664},'NDBI 2015');
 Map.addLayer(ndbi00,{'min':-0.5197, 'max':0.664},'NDBI 2000');
-
-// //Calculate a confusion matrix
-// var accuracyMatrix = trained.confusionMatrix();
-// print('Resubstitution error matrix: ', accuracyMatrix);
-
-// //Estimate the overall accuracy rate
-// var overallAccuracy = accuracyMatrix.accuracy();
-// print('Training overall accuracy: ', overallAccuracy);
-
-// //Why is my classifier 100% correct???!!!! NOw I dont see my classifier!!!
 
 
 //How big is urban area??? 
