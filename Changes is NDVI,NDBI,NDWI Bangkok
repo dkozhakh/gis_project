@@ -33,7 +33,7 @@ var l7Composite00= ee.Algorithms.Landsat.simpleComposite({
 
 
 
-//NDVI
+//Calculating NDVI
 var ndvi15 = l7Composite15.normalizedDifference(['B4', 'B3']);
 var ndvi00 = l7Composite00.normalizedDifference(['B4', 'B3']);
 ndvi15.getInfo;// aha!!!It is an image!!!
@@ -91,7 +91,7 @@ Export.image.toDrive(
   });
   
 
-//NDBI
+//Creating NDBI
 var ndbi15 = l7Composite15.normalizedDifference(['B5', 'B4']);
 var ndbi00 = l7Composite00.normalizedDifference(['B5', 'B4']);
 
@@ -138,7 +138,7 @@ var ndwi15 = l7Composite15.normalizedDifference(['B2', 'B4']);
 var ndwi00 = l7Composite00.normalizedDifference(['B2', 'B4']);
 var ndbi_river = ndwi15.lt(0.1);
 Map.addLayer(increase_ndbi.mask(increase_ndbi).updateMask(ndbi_river), {'palette': 'FF7F50'}, 'increase in NDBI 2000-2015');
-//IS there a way to exclude water from NDBI???
+
 
 //Export images
 Export.image.toDrive(
